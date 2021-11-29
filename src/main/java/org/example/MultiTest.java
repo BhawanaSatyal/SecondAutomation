@@ -49,7 +49,8 @@ public class MultiTest {
 
     }
     @BeforeMethod
-    public static void openBrowswer(){
+    public static void openBrowswer()
+    {
         System.setProperty("webdriver.chrome.driver", "src/test/drivers/chromedriver.exe");// System Property for Chrome Driver
         driver = new ChromeDriver();//instantiate ChromeDriver class
         driver.manage().window().maximize();// open window fullscreen
@@ -62,10 +63,10 @@ public class MultiTest {
 
     @Test
     public void verifyUserShouldBeAbleToRegisterSuccessfully() {
-        clickOnElement(By.xpath("//a[@class='ico-register']"));
+        clickOnElement(By.xpath("//a[@class='ico-register']"));// click on register
         Assert.assertTrue(driver.getCurrentUrl().contains("register"));
-        typeText(By.name("FirstName"), "Bhawana");
-        typeText(By.name("LastName"), "Satyal");
+        typeText(By.name("FirstName"), "Bhawana");// add value
+        typeText(By.name("LastName"), "Satyal");// type in lastname
         Select selectDay = new Select(driver.findElement(By.name("DateOfBirthDay")));
         //select Day from dropdown
         selectDay.selectByVisibleText("15");
@@ -77,15 +78,15 @@ public class MultiTest {
         selectYear.selectByVisibleText("2000");
         String email = "bhawana+" + currentTimeStamp() + "@gmail.com";
         System.out.println(email);
-        typeText(By.name("Email"), email);
-        clickOnElement(By.id("Newsletter"));
-        typeText(By.id("Password"), "testtest");
-        typeText(By.id("ConfirmPassword"), "testtest");
-        waitForClickable(By.name("register-button"), 10);
-        clickOnElement(By.name("register-button"));
-        String actualRegistrationSuccessMessage = getTextFromElement(By.xpath("//div[@class='result']"));
-        String expectedRegistrationSuccessMessage = "Your registration completed";
-        Assert.assertEquals(actualRegistrationSuccessMessage,expectedRegistrationSuccessMessage);
+        typeText(By.name("Email"), email);// type email
+        clickOnElement(By.id("Newsletter"));// click on Newsletter
+        typeText(By.id("Password"), "123456");
+        typeText(By.id("ConfirmPassword"), "123456");//
+        waitForClickable(By.name("register-button"), 10);// applied wait time
+        clickOnElement(By.name("register-button"));// click on register
+        String expectedRegistrationSuccessMessage = "Your registration completed"; // expected result
+        String actualRegistrationSuccessMessage = getTextFromElement(By.xpath("//div[@class='result']"));// actual result
+        Assert.assertEquals(expectedRegistrationSuccessMessage, actualRegistrationSuccessMessage);
 
     }
 
@@ -96,27 +97,27 @@ public class MultiTest {
         clickOnElement(By.xpath("//ul[@class='top-menu notmobile']/Li/a[@href='/computers']"));// click on computers
         clickOnElement(By.xpath("//img[@alt='Picture for category Desktops']")); // click on desktops
         clickOnElement(By.xpath("//div/div/h2/a[@href='/build-your-own-computer']"));// click on build your own computer
-        String expectedResult = "COMP_CUST";
-        String actualResult = getTextFromElement(By.id("sku-1"));
+        String expectedResult = "COMP_CUST"; // expected result
+        String actualResult = getTextFromElement(By.id("sku-1"));// actual result
         Assert.assertEquals(actualResult,expectedResult);
 
     }
     @Test
 
-    public void VerifyOnlyRegisteredUserShouldBeAbleToReferAProductToAFriend()
-    {
+    public void VerifyOnlyRegisteredUserShouldBeAbleToReferAProductToAFriend() throws InterruptedException {
 
-        clickOnElement(By.xpath("//ul[@class='top-menu notmobile']/Li/a[@href='/computers']"));
-        clickOnElement(By.xpath("//img[@alt='Picture for category Desktops']"));
-        clickOnElement(By.xpath("//div/div/h2/a[@href='/build-your-own-computer']"));
-        clickOnElement(By.xpath("//div[@class='email-a-friend']/button"));
-        typeText(By.id("FriendEmail"), "xyz@hotmail.com");
-        typeText(By.id("YourEmailAddress"),"Bhawana@gmail.com");
-        typeText(By.id("PersonalMessage"), "Amazing Product Highly Recommended");
-        clickOnElement(By.xpath("//button[@type='submit' and @name]"));
-        String expectedResult1 = "Only registered customers can use email a friend feature";
-        String actualResult1 = getTextFromElement(By.xpath("//div[@class='message-error validation-summary-errors']/ul/li"));
+        clickOnElement(By.xpath("//ul[@class='top-menu notmobile']/Li/a[@href='/computers']"));// click on computers
+        clickOnElement(By.xpath("//h2/a[@href='/notebooks' and @title= 'Show products in category Notebooks']"));// click on Notebooks
+        clickOnElement(By.xpath("//h2/a[@href='/apple-macbook-pro-13-inch']"));// click on Apple MacBook Pro 13-inch
+        clickOnElement(By.xpath("//div[@class='email-a-friend']/button"));// click on email a friend
+        typeText(By.id("FriendEmail"), "xyz@hotmail.com");// add friends email address
+        typeText(By.id("YourEmailAddress"),"Bhawana@gmail.com");// add your email address
+        typeText(By.id("PersonalMessage"), "Amazing Product Highly Recommended");// type a personal message
+        clickOnElement(By.xpath("//button[@type='submit' and @name]")); // click on send email
+        String expectedResult1 = "Only registered customers can use email a friend feature";// expected result
+        String actualResult1 = getTextFromElement(By.xpath("//div[@class='message-error validation-summary-errors']/ul/li"));// actual result
         Assert.assertEquals(actualResult1,expectedResult1);
+        Thread.sleep(3000);
 
 
 
@@ -130,15 +131,14 @@ public class MultiTest {
         typeText(By.id("AddNewComment_CommentTitle"),"Abcde");// click on title text box and add value
         typeText(By.id("AddNewComment_CommentText"),"Amazing Product");// click on comment text box and add value
         clickOnElement(By.xpath("//button[@type='submit' and @name='add-comment']"));// click on new comment
-        String expectedResult2= "News comment is successfully added.";
-        String actualResult2 = getTextFromElement(By.xpath("//div[@class='result']"));
+        String expectedResult2= "News comment is successfully added.";// expected result
+        String actualResult2 = getTextFromElement(By.xpath("//div[@class='result']")); // actual result
         Assert.assertEquals(actualResult2,expectedResult2); // compares two conditions
 
     }
 
     @AfterMethod
-    public void closeBrowser()
-    {
+    public void closeBrowser() {
         driver.close();//closing the browser
     }
 }
